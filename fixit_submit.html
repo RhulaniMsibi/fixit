@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FixIt – Submit Report</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f1;min-height:100vh}
+
+  nav{background:#1a5c38;height:58px;display:flex;align-items:center;padding:0 28px;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+  .brand{color:#fff;font-size:1.15rem;font-weight:700;display:flex;align-items:center;gap:8px}
+  .brand span{background:#f4a623;color:#1a1a1a;padding:2px 8px;border-radius:4px;font-size:.78rem;font-weight:800}
+  .back{color:rgba(255,255,255,.8);font-size:.85rem;text-decoration:none}
+
+  .progress{background:#fff;border-bottom:1px solid #e0e7e0;padding:14px 28px}
+  .steps{display:flex;justify-content:center;max-width:500px;margin:0 auto;position:relative}
+  .step{flex:1;text-align:center;position:relative}
+  .step-line{position:absolute;top:13px;left:55%;width:90%;height:2px;background:#e0e7e0;z-index:0}
+  .step:last-child .step-line{display:none}
+  .step-c{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;position:relative;z-index:1}
+  .step.active .step-c{background:#1a5c38;color:#fff}
+  .step.idle .step-c{background:#e5e7eb;color:#9ca3af}
+  .step-lbl{font-size:.7rem;margin-top:4px;color:#9ca3af}
+  .step.active .step-lbl{color:#1a5c38;font-weight:600}
+
+  .wrap{max-width:600px;margin:22px auto;padding:0 16px 32px}
+  .card{background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);overflow:hidden}
+  .fhead{background:#1a5c38;padding:20px 24px;color:#fff}
+  .fhead h2{font-size:1.1rem;font-weight:700}
+  .fhead p{font-size:.82rem;opacity:.8;margin-top:4px}
+  .fbody{padding:22px 24px}
+
+  .warning{background:#fef3c7;border:1px solid #fbbf24;border-radius:7px;padding:10px 14px;font-size:.81rem;color:#92400e;margin-bottom:18px;display:flex;gap:8px;align-items:flex-start}
+
+  .cat-label{font-size:.85rem;font-weight:600;margin-bottom:8px;color:#111}
+  .cat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px}
+  .cat-opt{border:2px solid #e5e7eb;border-radius:8px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .15s}
+  .cat-opt.sel{border-color:#1a5c38;background:#e8f5ee}
+  .cat-opt:hover{border-color:#1a5c38;background:#f0f9f4}
+  .cat-icon{font-size:1.4rem}
+  .cat-name{font-size:.68rem;font-weight:600;margin-top:4px;color:#374151}
+
+  .fg{margin-bottom:16px}
+  label{display:block;font-size:.84rem;font-weight:600;margin-bottom:5px;color:#111}
+  .req{color:#ef4444;margin-left:2px}
+  input,textarea,select{width:100%;padding:9px 12px;border:1.5px solid #d1d5db;border-radius:7px;font-size:.88rem;font-family:inherit;transition:border-color .2s,box-shadow .2s;background:#fff;color:#111}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:#1a5c38;box-shadow:0 0 0 3px rgba(26,92,56,.1)}
+  input::placeholder,textarea::placeholder{color:#9ca3af}
+  .hint{font-size:.75rem;color:#9ca3af;margin-top:4px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  textarea{resize:vertical;min-height:90px}
+  .char-count{font-size:.72rem;color:#9ca3af;margin-top:3px;text-align:right}
+  .char-count strong{color:#6b7280}
+
+  .submit-btn{width:100%;background:#1a5c38;color:#fff;padding:13px;border:none;border-radius:8px;font-size:.98rem;font-weight:700;cursor:pointer;margin-top:6px;transition:background .2s}
+  .submit-btn:hover{background:#145230}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">🔧 FixIt <span>BETA</span></div>
+  <a class="back" href="#">← Dashboard</a>
+</nav>
+
+<div class="progress">
+  <div class="steps">
+    <div class="step active">
+      <div class="step-line"></div>
+      <div class="step-c">1</div>
+      <div class="step-lbl">Report Details</div>
+    </div>
+    <div class="step idle">
+      <div class="step-line"></div>
+      <div class="step-c">2</div>
+      <div class="step-lbl">Review</div>
+    </div>
+    <div class="step idle">
+      <div class="step-c">3</div>
+      <div class="step-lbl">Submitted</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="card">
+    <div class="fhead">
+      <h2>Report a Service Delivery Issue</h2>
+      <p>Fill in the details below. You will receive a reference number once submitted.</p>
+    </div>
+    <div class="fbody">
+
+      <div class="warning">
+        <span>⚠️</span>
+        <span><strong>Emergency?</strong> For life-threatening emergencies call <strong>10111</strong> (Police) or <strong>10177</strong> (Ambulance) first.</span>
+      </div>
+
+      <div class="cat-label">Issue Category <span class="req">*</span></div>
+      <div class="cat-grid" id="catGrid">
+        <div class="cat-opt sel" onclick="selectCat(this)"><div class="cat-icon">💧</div><div class="cat-name">Water Leak</div></div>
+        <div class="cat-opt" onclick="selectCat(this)"><div class="cat-icon">⚡</div><div class="cat-name">Electricity</div></div>
+        <div class="cat-opt" onclick="selectCat(this)"><div class="cat-icon">🚧</div><div class="cat-name">Pothole</div></div>
+        <div class="cat-opt" onclick="selectCat(this)"><div class="cat-icon">🗑️</div><div class="cat-name">Waste</div></div>
+        <div class="cat-opt" onclick="selectCat(this)"><div class="cat-icon">📋</div><div class="cat-name">Other</div></div>
+      </div>
+
+      <div class="fg">
+        <label>Issue Title <span class="req">*</span></label>
+        <input type="text" id="title" value="Water pipe burst on Dutoitspan Road" placeholder="e.g., Water pipe burst on Main Street">
+        <div class="hint">Be specific — include street name or nearest landmark</div>
+      </div>
+
+      <div class="fg">
+        <label>Description <span class="req">*</span></label>
+        <textarea id="desc" maxlength="500" oninput="updateCount()">Large water leak on Dutoitspan Road near the Shell garage. Has been leaking for 3 days. Road is flooded and traffic is affected.</textarea>
+        <div class="char-count">Characters remaining: <strong id="counter">357</strong></div>
+      </div>
+
+      <div class="row2">
+        <div class="fg">
+          <label>Location <span class="req">*</span></label>
+          <input type="text" value="Dutoitspan Road, near Shell" placeholder="Street address / landmark">
+        </div>
+        <div class="fg">
+          <label>Ward Number <span style="color:#9ca3af;font-weight:400">(optional)</span></label>
+          <input type="text" value="Ward 14" placeholder="e.g., Ward 12">
+        </div>
+      </div>
+
+      <div class="fg">
+        <label>Priority Level</label>
+        <select>
+          <option>Low – Minor inconvenience</option>
+          <option>Medium – Needs attention soon</option>
+          <option selected>High – Affecting many residents</option>
+          <option>Urgent – Immediate danger</option>
+        </select>
+      </div>
+
+      <button class="submit-btn" onclick="this.textContent='Submitting…'">Submit Report →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function selectCat(el) {
+  document.querySelectorAll('.cat-opt').forEach(o => o.classList.remove('sel'));
+  el.classList.add('sel');
+}
+function updateCount() {
+  const remaining = 500 - document.getElementById('desc').value.length;
+  const el = document.getElementById('counter');
+  el.textContent = remaining;
+  el.style.color = remaining < 50 ? '#ef4444' : '#6b7280';
+}
+</script>
+</body>
+</html>

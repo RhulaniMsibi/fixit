@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FixIt – Dashboard</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f1;min-height:100vh}
+
+  nav{background:#1a5c38;height:58px;display:flex;align-items:center;padding:0 28px;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+  .brand{color:#fff;font-size:1.15rem;font-weight:700;display:flex;align-items:center;gap:8px}
+  .brand span{background:#f4a623;color:#1a1a1a;padding:2px 8px;border-radius:4px;font-size:.78rem;font-weight:800;letter-spacing:.5px}
+  .nav-links{display:flex;align-items:center;gap:6px}
+  .nav-links a{color:rgba(255,255,255,.82);font-size:.84rem;padding:6px 12px;border-radius:5px;text-decoration:none}
+  .nav-links a:hover{background:rgba(255,255,255,.1)}
+  .btn-nav{background:#f4a623!important;color:#1a1a1a!important;font-weight:700;padding:7px 16px!important;border-radius:6px!important}
+
+  .hero{background:linear-gradient(130deg,#1a5c38 0%,#2d7a50 100%);color:#fff;padding:38px 28px 36px;text-align:center}
+  .hero h1{font-size:1.7rem;font-weight:800;margin-bottom:8px}
+  .hero p{font-size:.92rem;opacity:.83;max-width:520px;margin:0 auto 20px}
+  .hero-btn{background:#f4a623;color:#1a1a1a;font-weight:700;padding:11px 32px;border-radius:8px;font-size:.95rem;border:none;cursor:pointer;display:inline-block}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:900px;margin:0 auto;padding:22px 28px 0}
+  .stat{background:#fff;border-radius:10px;padding:18px 16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+  .stat.s1{border-top:4px solid #1a5c38}
+  .stat.s2{border-top:4px solid #f4a623}
+  .stat.s3{border-top:4px solid #22c55e}
+  .stat-n{font-size:2.2rem;font-weight:800;color:#1a5c38}
+  .stat.s2 .stat-n{color:#d97706}
+  .stat.s3 .stat-n{color:#16a34a}
+  .stat-l{font-size:.78rem;color:#6b7280;margin-top:4px}
+
+  .section{max-width:900px;margin:0 auto;padding:20px 28px 28px}
+  .sec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .sec-head h2{font-size:1rem;font-weight:700;color:#111}
+  .sec-head a{font-size:.82rem;color:#1a5c38;text-decoration:none}
+
+  .issue-list{display:flex;flex-direction:column;gap:8px}
+  .card{background:#fff;border-radius:9px;padding:12px 16px;box-shadow:0 1px 3px rgba(0,0,0,.07);display:flex;align-items:center;gap:12px;border-left:4px solid #ccc;cursor:pointer;transition:box-shadow .15s}
+  .card:hover{box-shadow:0 4px 12px rgba(0,0,0,.12)}
+  .card.water{border-left-color:#3b82f6}
+  .card.elec{border-left-color:#f4a623}
+  .card.pot{border-left-color:#ef4444}
+  .card.waste{border-left-color:#22c55e}
+  .icon{font-size:1.35rem;min-width:28px;text-align:center}
+  .info{flex:1}
+  .info strong{font-size:.9rem;color:#111;display:block}
+  .info span{font-size:.76rem;color:#9ca3af;margin-top:2px;display:block}
+  .badge{padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:600;white-space:nowrap}
+  .b-sub{background:#fef3c7;color:#92400e}
+  .b-prog{background:#dbeafe;color:#1d4ed8}
+  .b-res{background:#d1fae5;color:#065f46}
+  .b-ack{background:#e0e7ff;color:#3730a3}
+
+  footer{background:#1a5c38;color:rgba(255,255,255,.65);text-align:center;padding:18px;font-size:.82rem;margin-top:24px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">🔧 FixIt <span>BETA</span></div>
+  <div class="nav-links">
+    <a href="#">Dashboard</a>
+    <a href="#">My Reports</a>
+    <a href="#" class="btn-nav">+ Report Issue</a>
+    <a href="#">Login</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Community Service Delivery Portal</h1>
+  <p>Report water leaks, potholes, electricity faults and waste problems. Track your issue until it's resolved.</p>
+  <button class="hero-btn">Report a Problem</button>
+</div>
+
+<div class="stats">
+  <div class="stat s1"><div class="stat-n">142</div><div class="stat-l">Total Reports Submitted</div></div>
+  <div class="stat s2"><div class="stat-n">34</div><div class="stat-l">Currently In Progress</div></div>
+  <div class="stat s3"><div class="stat-n">87</div><div class="stat-l">Issues Resolved</div></div>
+</div>
+
+<div class="section">
+  <div class="sec-head">
+    <h2>Recent Community Reports</h2>
+    <a href="#">View All →</a>
+  </div>
+  <div class="issue-list">
+    <div class="card water">
+      <div class="icon">💧</div>
+      <div class="info"><strong>Water pipe burst on Dutoitspan Road</strong><span>Dutoitspan Rd, Ward 14 · 15 Mar 2025 · Ref: FIX-001234</span></div>
+      <span class="badge b-prog">In Progress</span>
+    </div>
+    <div class="card elec">
+      <div class="icon">⚡</div>
+      <div class="info"><strong>Street lights out for 3 weeks – Galeshewe</strong><span>Langa St, Ward 9 · 14 Mar 2025 · Ref: FIX-001233</span></div>
+      <span class="badge b-ack">Acknowledged</span>
+    </div>
+    <div class="card pot">
+      <div class="icon">🚧</div>
+      <div class="info"><strong>Large pothole causing tyre damage</strong><span>Oliver Rd, Ward 9 · 13 Mar 2025 · Ref: FIX-001232</span></div>
+      <span class="badge b-res">Resolved</span>
+    </div>
+    <div class="card waste">
+      <div class="icon">🗑️</div>
+      <div class="info"><strong>Refuse not collected for 2 weeks</strong><span>Floors St, Ward 12 · 12 Mar 2025 · Ref: FIX-001231</span></div>
+      <span class="badge b-sub">Submitted</span>
+    </div>
+    <div class="card water">
+      <div class="icon">💧</div>
+      <div class="info"><strong>No water pressure – entire block affected</strong><span>Du Toitspan Rd, Ward 3 · 11 Mar 2025 · Ref: FIX-001230</span></div>
+      <span class="badge b-prog">In Progress</span>
+    </div>
+  </div>
+</div>
+
+<footer>FixIt Community Portal · Sol Plaatje Municipality · 2025</footer>
+
+</body>
+</html>
